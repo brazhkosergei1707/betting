@@ -157,89 +157,83 @@ public class BettingParserBetSBC implements BettingParser {
         }
     }
 
+    private boolean openCurrentMatches(WebDriver driver){
+        boolean isMatches = false;
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info("Открываем список матчей LIVE");
+        driver.findElement(By.xpath("//a[@href='/en/live']")).click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        driver.findElement(By.xpath("//*[text()='Live-betting']")).click();
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        try {
+            driver.findElement(By.xpath("//span[text()='Basketball']")).click();
+            isMatches = true;
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            log.info("Сейчас нет матчей.");
+        }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return  isMatches;
+    }
+
+    private List<WebElement> getMatches( WebDriver driver){
+        List<WebElement> matches = driver.findElement(By.tagName("app-events-live")).findElements(By.tagName("app-event-unit"));
+        return matches;
+    }
+
     @Override
     public void updateCurrentMatchesLive(Map<String, MatchLiveBetting> currentMatches, WebDriver driver, double margin, double minBet, Betting betting) { //
         boolean isMatches = false;
         try {
-//            driver.findElement(By.cssSelector("span.logo-ico")).click();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            log.info("Открываем список матчей LIVE");
-            driver.findElement(By.xpath("//a[@href='/en/live']")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            driver.findElement(By.xpath("//*[text()='Live-betting']")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//            driver.findElement(By.cssSelector("ul.live-menu-ul")).findElement(By.xpath("//a[text()='Live-bets']")).click();
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
-
-            driver.findElement(By.xpath("//span[text()='Basketball']")).click();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-//            WebElement carouselItems = driver.findElement(By.cssSelector("ul.carousel-items"));
-//            try {
-//                List<WebElement> carouselBlocks = carouselItems.findElements(By.cssSelector("li.carousel-block"));
-//                for (WebElement element : carouselBlocks) {
-//                    String text = element.findElement(By.cssSelector("label.text")).findElement(By.cssSelector("span.sport_name")).getText();
-//                    if (text.compareTo("Basketball") == 0) {
-//                        element.click();
-//                        Thread.sleep(1000);
-//                        String basketLinkClassString = element.getAttribute("class");
-//                        if (basketLinkClassString.contains("active")) {
-//                            isMatches = true;
-//                        }
-//                        break;
-//                    }
-//                }
-//            } catch (NoSuchElementException e) {
-//                e.printStackTrace();
-//                log.info("Сейчас нет матчей.");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
+            isMatches = openCurrentMatches(driver);
             if (isMatches) {
-                List<WebElement> matches = driver.findElements(By.cssSelector("div.live-list__championship-event"));
+                List<WebElement> matches = getMatches(driver);
                 for (WebElement matchElement : matches) {
                     try {
                         if (matchElement.isDisplayed()) {
-                            String nameOfMatch;
-                            String firstTeamName = matchElement.findElement(By.cssSelector("span.name_ht")).getText();
-                            String secondTeamName = matchElement.findElement(By.cssSelector("span.name_at")).getText();
-                            if (firstTeamName == null || secondTeamName == null || firstTeamName.length() < 1 || secondTeamName.length() < 1) {
-                                continue;
-                            }
-                            nameOfMatch = firstTeamName + " vs " + secondTeamName;
+                            String nameOfMatch = "test";
+
+//                            String firstTeamName = matchElement.findElement(By.cssSelector("span.name_ht")).getText();
+//                            String secondTeamName = matchElement.findElement(By.cssSelector("span.name_at")).getText();
+//                            if (firstTeamName == null || secondTeamName == null || firstTeamName.length() < 1 || secondTeamName.length() < 1) {
+//                                continue;
+//                            }
+//                            nameOfMatch = firstTeamName + " vs " + secondTeamName;
+
+                            String linkToMatch = "";
+                            linkToMatch = matchElement.findElement(By.cssSelector("a.line-event__name-link")).getAttribute("href");
+
                             MatchLiveBetting matchLive;
-                            if (!currentMatches.containsKey(nameOfMatch)) {
-                                matchLive = new MatchLiveBetting(betting, nameOfMatch, margin, minBet);
-                                currentMatches.put(nameOfMatch, matchLive);
+                            if (!currentMatches.containsKey(linkToMatch)) {
+                                matchLive = new MatchLiveBetting(betting, nameOfMatch, linkToMatch , margin, minBet);
+                                currentMatches.put(linkToMatch, matchLive);
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                         log.info(e.getMessage());
                     }
+                }
+                for (String key :currentMatches.keySet()) {
+                    System.out.println(key + " " + currentMatches.get(key).toString());
                 }
             }
         } catch (Exception e) {
@@ -681,126 +675,41 @@ public class BettingParserBetSBC implements BettingParser {
     public void lookingForMatches(WebDriver driver, Map<String, MatchLiveBetting> matchLiveMap, double margin, double minBet, Betting betting) {
         boolean isMatches = false;
         try {
-            try {
-                WebElement element1 = driver.findElement(By.cssSelector("span.logo-ico"));//
-                Actions actions = new Actions(driver);
-                actions.keyDown(Keys.LEFT_CONTROL)
-                        .click(element1)
-                        .keyUp(Keys.LEFT_CONTROL)
-                        .build()
-                        .perform();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                WebDriver window = driver.switchTo().window(driver.getWindowHandles().toArray()[0].toString());
-                window.close();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                driver.switchTo().window(driver.getWindowHandles().toArray()[0].toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            if (matchLiveMap != null) {
+//                try {
+//                    for (String integer : matchLiveMap.keySet()) {
+//                        MatchLiveBetting matchLive = matchLiveMap.get(integer);
+//
+//                        if (matchLive.isFinished()) {
+//                            if (!matchLive.isEventMade()) {
+//                                matchLive.makeNextEvent();
+//                            }
+//                            continue;
+//                        }
+//
+//                        String[] split = matchLive.getNameOfMatch().split(" vs ");
+//                        try {
+//                            driver.findElement(By.xpath("//span[text()='" + split[0] + "']"));
+//                            driver.findElement(By.xpath("//span[text()='" + split[1] + "']"));
+//                            matchLive.setAlmostFinish(false);
+//                        } catch (Exception e) {
+//                            if (matchLive.isAlmostFinish()) {
+//                                matchLive.setFinished(true);
+//                                log.info("Матч " + matchLive.getNameOfMatch() + " уже окончен.");
+//                            } else {
+//                                matchLive.setAlmostFinish(true);
+//                            }
+//                        }
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
-            driver.findElement(By.cssSelector("div.menu")).findElement(By.cssSelector("a[href='/v3/en/live/']")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            driver.findElement(By.cssSelector("ul.live-menu-ul")).findElement(By.xpath("//a[text()='Live-bets']")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if (matchLiveMap != null) {
-                try {
-                    for (String integer : matchLiveMap.keySet()) {
-                        MatchLiveBetting matchLive = matchLiveMap.get(integer);
-
-                        if (matchLive.isFinished()) {
-                            if (!matchLive.isEventMade()) {
-                                matchLive.makeNextEvent();
-                            }
-                            continue;
-                        }
-
-                        String[] split = matchLive.getNameOfMatch().split(" vs ");
-                        try {
-                            driver.findElement(By.xpath("//span[text()='" + split[0] + "']"));
-                            driver.findElement(By.xpath("//span[text()='" + split[1] + "']"));
-                            matchLive.setAlmostFinish(false);
-                        } catch (Exception e) {
-                            if (matchLive.isAlmostFinish()) {
-                                matchLive.setFinished(true);
-                                log.info("Матч " + matchLive.getNameOfMatch() + " уже окончен.");
-                            } else {
-                                matchLive.setAlmostFinish(true);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            driver.findElement(By.cssSelector("div.menu")).findElement(By.cssSelector("a[href='/v3/en/live/']")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            driver.findElement(By.cssSelector("ul.live-menu-ul")).findElement(By.xpath("//a[text()='Live-bets']")).click();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            driver.findElement(By.xpath("//a[text()='All']")).click();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            WebElement carouselItems = driver.findElement(By.cssSelector("ul.carousel-items"));
-            try {
-                List<WebElement> carouselBlocks = carouselItems.findElements(By.cssSelector("li.carousel-block"));
-                for (WebElement element : carouselBlocks) {
-                    String text = element.findElement(By.cssSelector("label.text")).findElement(By.cssSelector("span.sport_name")).getText();
-                    if (text.compareTo("Basketball") == 0) {
-                        element.click();
-                        Thread.sleep(1000);
-                        String basketLinkClassString = element.getAttribute("class");
-                        if (basketLinkClassString.contains("active")) {
-                            isMatches = true;
-                        }
-                        break;
-                    }
-                }
-            } catch (NoSuchElementException e) {
-                e.printStackTrace();
-                log.info("Сейчас нет матчей.");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            isMatches = openCurrentMatches(driver);
             if (isMatches) {
-                List<WebElement> matches = driver.findElements(By.cssSelector("div.live-list__championship-event"));
+                List<WebElement> matches = getMatches(driver);
                 int sizeOFMatches = matches.size();
                 WebElement matchElement;
 
@@ -909,7 +818,7 @@ public class BettingParserBetSBC implements BettingParser {
                                 }
                             } else {
                                 Double maxBet = setMaxBetForMatch(matchElement, driver);
-                                matchLive = new MatchLiveBetting(betting, nameOfMatch, margin, minBet);
+                                matchLive = new MatchLiveBetting(betting, nameOfMatch,"", margin, minBet);
                                 if (maxBet != null) {
                                     matchLive.setMaxBet(maxBet);
                                 }

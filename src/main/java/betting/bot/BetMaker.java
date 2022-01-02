@@ -49,9 +49,9 @@ public class BetMaker extends Thread {
     @Override
     public void run() {
         startBetMaker();
-        parser.updateHistoryBet(driver, storage.getHistoryBets());
-        parser.updateCurrentBet(driver, storage.getCurrentBets());
-        storage.checkBatsInStorage();
+//        parser.updateHistoryBet(driver, storage.getHistoryBets());
+//        parser.updateCurrentBet(driver, storage.getCurrentBets());
+//        storage.checkBatsInStorage();
 
         int updateCurrentCount = 0;
         while (work) {

@@ -23,6 +23,7 @@ public class MatchLiveBetting {
     private double maxBet = 0.0;
     private double minBet;
     private String nameOfMatch;
+    private String linkToMatch;
     boolean scheduleIsOn = false;
 
     private long scheduleTime = -7200000L;
@@ -45,6 +46,9 @@ public class MatchLiveBetting {
     private boolean eventMade;
 
     public MatchLiveBetting(Betting betting, String nameOfMatch, double margin, double minBet) {
+
+    }
+    public MatchLiveBetting(Betting betting, String nameOfMatch, String linkToMatch, double margin, double minBet) {
         this.betting = betting;
         betMakerMap = betting.getBetMakerMap();
         multiMap = new HashMap<>();
@@ -62,6 +66,7 @@ public class MatchLiveBetting {
         betStatistic = new HashMap<>();
         possibleBetSelectionBet = new ArrayList<>();
         this.nameOfMatch = nameOfMatch;
+        this.linkToMatch = linkToMatch;
         matchScoreStatistic = new HashMap<>();
         matchOddEvenStatistic = new HashMap<>();
     }
