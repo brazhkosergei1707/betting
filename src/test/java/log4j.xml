@@ -1,0 +1,43 @@
+
+<Configuration>
+
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %-50logger{4}: %msg%n</pattern>
+            </PatternLayout>
+        </Console>
+        <Routing name="RoutingAppender">
+            <Routes pattern="${ctx:logFileName}">
+                <Route>
+                    <RollingFile name="Rolling-${ctx:logFileName}"
+                                 fileName="C:/chromedriver/${ctx:logFileName}.javalog"
+                                 filePattern="./logs/${date:yyyy-MM}/${ctx:logFileName}_%d{yyyy-MM-dd}-%i.log.gz">
+                        <PatternLayout>
+                            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %-50logger{4}: %msg%n</pattern>
+                        </PatternLayout>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy interval="6"
+                                                       modulate="true"/>
+                            <SizeBasedTriggeringPolicy size="10 MB"/>
+                        </Policies>
+                    </RollingFile>
+                </Route>
+
+                <!-- This route is chosen if ThreadContext has no value for key logFileName. -->
+                <Route key="${ctx:logFileName}" ref="ConsoleAppender"/>
+
+            </Routes>
+        </Routing>
+    </Appenders>
+
+
+    <Loggers>
+        <Root level="trace">
+            <appender-ref ref="RoutingAppender" level="debug"/>
+        </Root>
+    </Loggers>
+</Configuration>
+
+
+

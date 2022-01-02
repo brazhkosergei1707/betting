@@ -1,0 +1,51 @@
+[0831/202923.196:ERROR:process_info.cc(632)] range at 0x996030d800000000, size 0x2d2 fully unreadable
+[0831/202923.203:ERROR:process_info.cc(632)] range at 0x9960313a00000000, size 0x2d2 fully unreadable
+[0831/202923.203:ERROR:process_info.cc(632)] range at 0x0, size 0x2d2 fully unreadable
+[0831/202923.891:ERROR:process_reader_win.cc(242)] ReadMemory at 0x225c4000000 of 384 bytes failed: Запрос ReadProcessMemory или WriteProcessMemory был выполнен только частично. (0x12B)
+[0831/202923.895:ERROR:crash_report_exception_handler.cc(116)] WriteEverything failed
+[0831/202923.973:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0907/224848.707:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0907/224848.711:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0907/224848.714:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0907/224848.714:ERROR:exception_snapshot_win.cc(87)] thread ID 9472 not found in process
+[0907/224848.714:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0907/224848.714:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0909/161042.533:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0909/161042.535:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0909/161042.538:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0909/161042.538:ERROR:exception_snapshot_win.cc(87)] thread ID 2948 not found in process
+[0909/161042.538:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0909/161042.538:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0909/213902.964:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0909/213902.972:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0909/213902.976:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0909/213902.976:ERROR:exception_snapshot_win.cc(87)] thread ID 11448 not found in process
+[0909/213902.976:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0909/213902.976:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0910/021444.499:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0910/021444.501:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0910/021444.504:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0910/021444.505:ERROR:exception_snapshot_win.cc(87)] thread ID 14016 not found in process
+[0910/021444.505:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0910/021444.505:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0911/030920.405:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0911/030920.407:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0911/030920.410:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0911/030920.410:ERROR:exception_snapshot_win.cc(87)] thread ID 864 not found in process
+[0911/030920.410:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0911/030920.410:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0913/000449.196:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0913/000449.198:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0913/000449.201:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0913/000449.201:ERROR:exception_snapshot_win.cc(87)] thread ID 8704 not found in process
+[0913/000449.201:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0913/000449.201:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[0913/164838.721:ERROR:process_info.cc(350)] VirtualQueryEx: Отказано в доступе. (0x5)
+[0913/164838.722:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0913/164838.725:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[0913/164838.725:ERROR:exception_snapshot_win.cc(87)] thread ID 4032 not found in process
+[0913/164838.725:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0913/164838.725:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения.  (0xc000010a)
+[1027/185755.046:ERROR:process_reader_win.cc(151)] SuspendThread: Отказано в доступе. (0x5)
+[1027/185755.047:ERROR:exception_snapshot_win.cc(87)] thread ID 4988 not found in process
+[1027/185755.047:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
